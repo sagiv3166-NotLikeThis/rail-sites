@@ -1,0 +1,46 @@
+/* אתרי רכבת — service worker. VERSION changes on every build. */
+const VERSION = "20260920-0340-fa65ca";
+const SHELL = "rail-shell-" + VERSION;
+const FONTS = "rail-fonts-v1";
+const ASSETS = ["./", "./index.html", "./manifest.webmanifest",
+  "./icons/icon.svg", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/maskable-512.png", "./icons/apple-touch-icon.png"];
+
+self.addEventListener("install", e => {
+  e.waitUntil(caches.open(SHELL).then(c => c.addAll(ASSETS)));
+});
+self.addEventListener("activate", e => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(
+    keys.filter(k => k.startsWith("rail-shell-") && k !== SHELL).map(k => caches.delete(k))
+  )).then(() => self.clients.claim()));
+});
+self.addEventListener("message", e => { if (e.data === "skip") self.skipWaiting(); });
+
+self.addEventListener("fetch", e => {
+  const req = e.request;
+  if (req.method !== "GET") return;
+  const url = new URL(req.url);
+
+  // Weather: always live, never cached
+  if (url.hostname.endsWith("open-meteo.com")) return;
+
+  // Google Fonts: cache-first
+  if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com") {
+    e.respondWith(caches.open(FONTS).then(async c => {
+      const hit = await c.match(req);
+      if (hit) return hit;
+      const res = await fetch(req);
+      if (res.ok || res.type === "opaque") c.put(req, res.clone());
+      return res;
+    }));
+    return;
+  }
+
+  // App shell: cache-first, works fully offline
+  if (url.origin === location.origin) {
+    e.respondWith(
+      caches.match(req, { ignoreSearch: true }).then(hit =>
+        hit || fetch(req).catch(() => req.mode === "navigate" ? caches.match("./index.html") : Response.error())
+      )
+    );
+  }
+});

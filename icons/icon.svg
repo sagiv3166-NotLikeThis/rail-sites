@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1A78EE"/><stop offset="1" stop-color="#0A47A3"/></linearGradient>
+<radialGradient id="gl"><stop offset="0" stop-color="#36E08A" stop-opacity=".7"/><stop offset="1" stop-color="#36E08A" stop-opacity="0"/></radialGradient>
+<linearGradient id="sh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><rect width="512" height="512" rx="112" fill="url(#bg)"/><g transform="translate(0.0,0.0) scale(1.0)">
+<g opacity=".9">
+ <path d="M120 452 H392" stroke="#07101F" stroke-width="12" stroke-linecap="round"/>
+ <path d="M146 434 V470 M196 434 V470 M316 434 V470 M366 434 V470" stroke="#07101F" stroke-width="10" stroke-linecap="round" opacity=".55"/>
+</g>
+<path d="M168 150 A88 88 0 0 1 344 150 L344 318 Q344 350 322 374 L256 444 L190 374 Q168 350 168 318 Z" fill="#07101F"/>
+<path d="M168 150 A88 88 0 0 1 344 150 L344 318 Q344 350 322 374 L256 444 L190 374 Q168 350 168 318 Z" fill="url(#sh)"/>
+<circle cx="256" cy="150" r="31" fill="#FF5A5F" opacity=".25"/>
+<circle cx="256" cy="232" r="31" fill="#FFC23D" opacity=".25"/>
+<circle cx="256" cy="314" r="70" fill="url(#gl)"/>
+<circle cx="256" cy="314" r="31" fill="#36E08A"/>
+<circle cx="246" cy="304" r="9" fill="#fff" opacity=".45"/>
+</g></svg>
